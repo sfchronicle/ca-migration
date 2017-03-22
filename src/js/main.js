@@ -34,20 +34,20 @@ var tooltip = d3.select("#county-map")
 // var mapname = "./assets/maps/ca_county_insets.json";
 var mapname = "./assets/maps/bacounties_topo.json";
 
-// var svgCACounties = d3.select("#county-map")
-//   .append("div")
-//   .classed("svg-container", true) //container class to make it responsive
-//   .attr("id","county-map")
-//   .append("svg")
-//   //responsive SVG needs these 2 attributes and no width and height attr
-//   .attr("preserveAspectRatio", "xMinYMin slice")
-//   .attr("viewBox", "0 0 860 1000")
-//   //class to make it responsive
-//   .classed("svg-content-responsive", true)
+var svg = d3.select("#county-map")
+  .append("div")
+  .classed("svg-container", true) //container class to make it responsive
+  .attr("id","county-map")
+  .append("svg")
+  //responsive SVG needs these 2 attributes and no width and height attr
+  .attr("preserveAspectRatio", "xMinYMin slice")
+  .attr("viewBox", "0 0 860 1000")
+  //class to make it responsive
+  .classed("svg-content-responsive", true)
 
 // d3.selectAll(".camapinset").classed("active",false);
 updateInfo("2011");
-drawmap(mapname,census2011);
+drawmap_initial(mapname,census2011);
 
 var years = [2011, 2012, 2013, 2014, 2015, 2016];
 var i = 0;
@@ -57,7 +57,7 @@ var tickTime = function() {
   drawmap(mapname,eval("census"+years[i]));
   updateInfo(years[i]);
   i = (i + 1) % years.length;
-  loop = setTimeout(tickTime, i == 0 ? 3000 : 3000);
+  loop = setTimeout(tickTime, i == 0 ? 2000 : 2000);
   // loop = setTimeout(tick, i == 0 ? 1700 : 1000);
 };
 
@@ -93,33 +93,15 @@ document.querySelector(".pause").addEventListener("click", function(e) {
 // generate map
 function drawmap(active_map,active_data) {
 
-    d3.select("#county-map").select("svg").remove();
-    d3.select("#county-map").select(".svg-container").remove();
-
-    // CA map by county
-    var svgCACounties = d3.select("#county-map")
-      .append("div")
-      .classed("svg-container", true) //container class to make it responsive
-      .attr("id","county-map")
-      .append("svg")
-      //responsive SVG needs these 2 attributes and no width and height attr
-      .attr("preserveAspectRatio", "xMinYMin slice")
-      .attr("viewBox", "0 0 950 1000")
-      //class to make it responsive
-      .classed("svg-content-responsive", true)
-      // .append("g")
-      //   .attr("transform", "translate(" + 100 + "," + 0 +") scale(0.5, 0.5)");
-
     d3.json(active_map, function(error, us) {
       if (error) throw error;
     //
-      var features = topojson.feature(us,us.objects.features).features;
-      // var
-      svgCACounties.selectAll(".states")
-        .data(topojson.feature(us, us.objects.features).features).enter()
-        .append("path")
-        .attr("class", "states")
-        .attr("d",path)
+      var nodes = svg.selectAll(".states")
+        .data(topojson.feature(us, us.objects.features).features);
+      nodes
+        // .transition()
+        // .ease("linear")
+        // .duration(500)
         .style("fill", function(d) {
           // var location = Number(d.id);
           var location = d.id;
@@ -150,7 +132,7 @@ function drawmap(active_map,active_data) {
           if (screen.width <= 480) {
             return tooltip
               .style("top",(d3.event.pageY+10)+"px")//(d3.event.pageY+40)+"px")
-              .style("left",((d3.event.pageX)/3+20)+"px");
+              .style("left",((d3.event.pageX)/3+40)+"px");
           } else if (screen.width <= 670) {
             return tooltip
               .style("top",(d3.event.pageY+10)+"px")//(d3.event.pageY+40)+"px")
@@ -171,6 +153,87 @@ function drawmap(active_map,active_data) {
       //
       // console.log(exiting);
       // exiting.remove();
+  });
+
+};
+
+// generate map
+function drawmap_initial(active_map,active_data) {
+
+    // d3.select("#county-map").select("svg").transition().duration(10).remove();
+    // d3.select("#county-map").select(".svg-container").transition().duration(10).remove();
+    //
+    // CA map by county
+    // var svg = d3.select("#county-map")
+    //   .append("div")
+    //   .classed("svg-container", true) //container class to make it responsive
+    //   .attr("id","county-map")
+    //   .append("svg")
+    //   //responsive SVG needs these 2 attributes and no width and height attr
+    //   .attr("preserveAspectRatio", "xMinYMin slice")
+    //   .attr("viewBox", "0 0 860 1000")
+    //   //class to make it responsive
+    //   .classed("svg-content-responsive", true)
+      // .append("g")
+      //   .attr("transform", "translate(" + 100 + "," + 0 +") scale(0.5, 0.5)");
+
+    d3.json(active_map, function(error, us) {
+      if (error) throw error;
+    //
+      var features = topojson.feature(us,us.objects.features).features;
+      var nodes = svg.selectAll(".states")
+        .data(topojson.feature(us, us.objects.features).features);
+      nodes.enter()
+        .append("path")
+        .attr("class", "states")
+        .attr("d",path)
+        .style("fill", function(d) {
+          console.log(d);
+          // var location = Number(d.id);
+          var location = d.id;
+          // console.log(active_data["county_name"]);
+          if (active_data[location]) {
+            // var mig = active_data[location]["migration"]/22000;
+            var mig = 1-Math.abs(active_data[location]["migration_percent"]/1.15);
+            console.log(mig);
+            if (active_data[location]["migration_percent"] > 0) {
+              return shadeColor2("#265B9B", mig)
+            } else {
+              var mig = 1-Math.abs(active_data[location]["migration_percent"]/0.5);
+              return shadeColor2("#BC1826", mig)
+            }
+          } else {
+            return lightest_gray;
+          }
+        })
+        .attr("d", path)
+        .on('mouseover', function(d,index) {
+          var location = d.id;
+          if (active_data[location]) {
+            var html_str = "<div class='name'>"+location+" County</div><div>Total migration: "+formatthousands(active_data[location]["migration"])+"</div><div>Total population: "+formatthousands(active_data[location]["population"])+"</div><div>Percentage of population migrating: "+formatthousands(active_data[location]["migration_percent"])+"%</div>";
+            tooltip.html(html_str);
+            tooltip.style("visibility", "visible");
+          }
+        })
+        .on("mousemove", function() {
+          if (screen.width <= 480) {
+            return tooltip
+              .style("top",(d3.event.pageY+10)+"px")//(d3.event.pageY+40)+"px")
+              .style("left",((d3.event.pageX)/3+40)+"px");
+          } else if (screen.width <= 670) {
+            return tooltip
+              .style("top",(d3.event.pageY+10)+"px")//(d3.event.pageY+40)+"px")
+              .style("left",((d3.event.pageX)/2+50)+"px");
+          } else {
+            return tooltip
+              .style("top", (d3.event.pageY+20)+"px")
+              .style("left",(d3.event.pageX-80)+"px");
+          }
+        })
+        .on("mouseout", function(){
+          return tooltip.style("visibility", "hidden");
+        });
+
   });
 
 };
