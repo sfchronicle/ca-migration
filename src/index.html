@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= json.project.seo_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="__sync_contentCategory" content="meterA">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <%= !json.project.embedded ? t.include("partials/_paywall.html") : t.include("partials/_embedframe.html") %>
+
+    <%= t.include("partials/_head.html") %>
+
+  </head>
+
+  <%= !json.project.embedded ? "<body>" : "<body is='responsive-body'>" %>
+
+    <div class="outer">
+
+      <div class="hed">Is the bay area still the land of opportunity?</div>
+      <div class="chatter">The bay area has always been a magnet for workers, who come here in droves to work at some of the most innovative and exciting companies in the world. Or at least, that's how it used to be. More and more, people have been leaving the bay area, or simply not coming. See how the migration has slowed, in some cases reversed, over the last year.</div>
+
+      <div class="info"></div>
+
+      <div class="legend-container">
+        <div class="element"><div class="swath blue-swath"><div class="legend-text">Migration in (% of population)</div></div></div>
+        <div class="element"><div class="swath red-swath"><div class="legend-text">Migration away (% of population)</div></div></div>
+      </div>
+
+      <div class="controls-container">
+        <div class="controls">
+          <div class="start selected"><i class="fa fa-play"></i></div>
+          <div class="pause"><i class="fa fa-pause"></i></div>
+        </div>
+        <div class="dropdown">
+          Choose a year:
+          <select name="select">
+            <option selected="selected" disabled="disabled">--</option>
+            <% for (var i = 2016; i > 2010; i--) { %>
+              <option value= <%= i %> > <%= i %> </option>
+            <% } %>
+          </select>
+        </div>
+      </div>
+
+      <div id="county-map" class="padding"></div>
+
+      <div class="credit">
+        <div class="entry">Emma O'Neill  &bull; <a href="mailto:eoneill@sfchronicle.com">eoneill@sfchronicle.com</a>   &bull; <a href = "https://twitter.com/emmaruthoneill" target="_blank">@emmaruthoneill</a></div>
+        <div class="entry">Kurtis Alexander  &bull; <a href="mailto:kalexander@sfchronicle.com">kalexander@sfchronicle.com</a>   &bull; <a href = "https://twitter.com/kurtisalexander" target="_blank">@kurtisalexander</a></div>
+        <div class="entry">Clint Wirtanen  &bull; <a href="mailto:cwirtanen@sfchronicle.com">cwirtanen@sfchronicle.com</a>   &bull; <a href = "https://twitter.com/ClintWirtanen" target="_blank">@ClintWirtanen</a></div>
+      </div>
+      <div class="source">Source: <a href="https://www.census.gov/data.html" target="_blank">U.S. Census Bureau</a></div>
+
+    </div>
+
+    <script>
+      var census2011 = <%= JSON.stringify(csv.census2011) %>
+      var census2012 = <%= JSON.stringify(csv.census2012) %>
+      var census2013 = <%= JSON.stringify(csv.census2013) %>
+      var census2014 = <%= JSON.stringify(csv.census2014) %>
+      var census2015 = <%= JSON.stringify(csv.census2015) %>
+      var census2016 = <%= JSON.stringify(csv.census2016) %>
+    </script>
+
+    <script src="app.js" async></script>
+    <%= t.include("partials/_helloSFC.html") %>
+
+  </body>
+</html>

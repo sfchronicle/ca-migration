@@ -1,0 +1,10 @@
+id,key,migration,population,migration_percent
+6001,Alameda,6332,1647704,0.38
+6013,Contra Costa,7913,1135127,0.70
+6041,Marin,-764,260651,-0.29
+6055,Napa,75,142166,0.05
+6075,San Francisco,5843,870887,0.67
+6081,San Mateo,-2699,764797,-0.35
+6085,Santa Clara,-3658,1919402,-0.19
+6095,Solano,3921,440207,0.89
+6097,Sonoma,890,503070,0.18

@@ -1,0 +1,197 @@
+@red: #BC1826;//#8A0000;//"#F04646";
+@blue: #265B9B;//#194E8E;//#004366;//"#62A9CC";
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 55%; /* aspect ratio */
+    vertical-align: top;
+    // overflow: hidden;
+}
+
+.legend-container {
+  font-size: 12px;
+  font-family: @block-graphics;
+  // border: 1px solid @black;
+  // border-radius: 6px;
+  width: 460px;
+  @media @mobile {
+    width: 90%;
+  }
+  margin: auto;
+  padding: 4px;
+  .display-flex;
+  .flex-wrap(wrap);
+  @media @mobile {
+    margin: 15px auto;
+  }
+  .element {
+    .flex(0 0 50%);
+    @media @mobile {
+      .flex(0 0 90%);
+    }
+  }
+  .swath  {
+    height: 14px;
+    width: 14px;
+    margin: 4px;
+    border-radius: 2px;
+  }
+  .red-swath {background: @red}
+  .blue-swath {background: @blue}
+  .legend-text {
+    width: 220px;
+    padding-left: 20px;
+    vertical-align: text-top;
+  }
+}
+
+#county-map {
+  padding-bottom: 200px;
+
+  @media @tablet {
+    padding-bottom: 95%;
+  }
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+.info {
+  font-family: @boldest-graphics;
+  font-size: 30px;
+  text-align: center;
+  color: #265B9B;
+}
+
+.controls-container {
+  display: block;
+  text-align: center;
+}
+
+.controls, .dropdown {
+  display: inline-block;
+}
+
+.dropdown {
+  padding-left: 20px;
+  font-family: @med-graphics;
+  font-size: 18px;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 5px;
+
+  select {
+    margin-left: 3px;
+    width: 100px;
+    font-family: @block-graphics;
+    font-size: 18px;
+  }
+}
+
+.controls {
+  padding-top: 10px;
+  text-align: center;
+  // display: block;
+  padding-left: 20px;
+}
+.start, .pause {
+  border-radius: 7px;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  color: @dark-gray;
+  background: @light-gray;
+  padding: 5px 10px 4px 10px;
+
+  &:hover {
+    background: @dark-gray;
+    color: white;
+  }
+
+  &.selected {
+    color: @black;
+    cursor: default;
+    background: @dark-gray;
+  }
+}
+
+.button-container {
+  text-align: center;
+  margin: 5px auto;
+  margin-bottom: 10px;
+  .button {
+    width: 240px;
+    border: 1px solid @dark-gray;
+    font-family: @block-graphics;
+    font-size: 16px;
+    display: inline-block;
+    border-radius: 3px;
+    padding: 1px;
+    cursor: pointer;
+    @media @mobile {
+      font-size: 14px;
+      width: 49%;
+    }
+    &:hover {
+      background: @dark-gray;
+      color: white;
+    }
+    &.selected {
+      background: @dark-gray;
+      color: white;
+    }
+  }
+}
+
+// topojson maps ---------------------------------------------------------------
+
+.states {
+  // fill: #b2b2b2;
+  z-index: -1;
+  stroke: white;
+  stroke-linejoin: round;
+  stroke-width: 0.3px;
+  &:hover {
+    opacity: 0.7;
+    // cursor: pointer;
+  }
+}
+.state-paths {
+  stroke: white;
+  stroke-width:2;
+  fill: none;
+}
+#county-map {
+  max-width: 400px;
+  margin: auto;
+  padding-top: 20px;
+  .states {
+    stroke-width: 1px;
+  }
+}
+
+.tooltip {
+  font-size: 14px;
+  z-index: 50;
+  font-family: @block-graphics;
+  padding: 10px;
+  // border-radius: 3px;
+  background: lighten(@light-gray,20%);
+  border: 1px @dark-gray solid;
+  min-width: 140px;
+  .name {
+    font-family: @med-graphics;
+    border-bottom: 1px solid @dark-gray;
+  }
+  @media @tablet {
+    font-size: 12px;
+  }
+  @media @mobile {
+    line-height: 20px;
+  }
+}
