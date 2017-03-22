@@ -24,7 +24,7 @@
   .display-flex;
   .flex-wrap(wrap);
   @media @mobile {
-    margin: 15px auto;
+    margin: 0 auto;
   }
   .element {
     .flex(0 0 50%);
@@ -50,8 +50,8 @@
 #county-map {
   padding-bottom: 200px;
 
-  @media @tablet {
-    padding-bottom: 95%;
+  @media @mobile {
+    padding-bottom: 170px;
   }
 }
 .svg-content-responsive {
@@ -192,6 +192,7 @@
     font-size: 12px;
   }
   @media @mobile {
+    max-width: 200px;
     line-height: 20px;
   }
 }
