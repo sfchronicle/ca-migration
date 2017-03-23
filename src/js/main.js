@@ -112,7 +112,9 @@ function drawmap(active_map,active_data) {
           var location = d.id;
           if (active_data[location]) {
             var mig = 1-Math.abs(active_data[location]["migration_percent"]/1.15);
-            if (active_data[location]["migration_percent"] > 0) {
+            if (Math.abs(active_data[location]["migration_percent"]) <= 0.05) {
+              return "#f2f2f2";
+            } else if (active_data[location]["migration_percent"] > 0) {
               return shadeColor2("#265B9B", mig)
             } else {
               var mig = 1-Math.abs(active_data[location]["migration_percent"]/0.5);
@@ -170,7 +172,9 @@ function drawmap_initial(active_map,active_data) {
           var location = d.id;
           if (active_data[location]) {
             var mig = 1-Math.abs(active_data[location]["migration_percent"]/1.15);
-            if (active_data[location]["migration_percent"] > 0) {
+            if (Math.abs(active_data[location]["migration_percent"]) <= 0.05) {
+              return "#f2f2f2";
+            } else if (active_data[location]["migration_percent"] > 0) {
               return shadeColor2("#265B9B", mig)
             } else {
               var mig = 1-Math.abs(active_data[location]["migration_percent"]/0.5);
