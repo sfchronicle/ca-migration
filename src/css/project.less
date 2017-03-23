@@ -10,41 +10,57 @@
     // overflow: hidden;
 }
 
+.legend-text {
+  font-size: 14px;
+  text-align: center;
+  font-family: @block-graphics;
+  padding-top: 10px;
+}
+
 .legend-container {
   font-size: 12px;
   font-family: @block-graphics;
-  // border: 1px solid @black;
-  // border-radius: 6px;
-  width: 460px;
+  padding-top: 20px;
+  text-align: center;
   @media @mobile {
-    width: 90%;
+    padding-top: 10px;
   }
   margin: auto;
-  padding: 4px;
-  .display-flex;
-  .flex-wrap(wrap);
-  @media @mobile {
-    margin: 0 auto;
-  }
-  .element {
-    .flex(0 0 50%);
-    @media @mobile {
-      .flex(0 0 90%);
-    }
+  .swath {
+    vertical-align: middle;
   }
   .swath  {
-    height: 14px;
-    width: 14px;
-    margin: 4px;
-    border-radius: 2px;
+    height: 16px;
+    width: 28px;
+    display: inline-block;
+    font-size: 0;
+    margin-right: -4px;
+    @media @mobile {
+      width: 14px;
+    }
   }
-  .red-swath {background: @red}
-  .blue-swath {background: @blue}
-  .legend-text {
-    width: 220px;
-    padding-left: 20px;
-    vertical-align: text-top;
+  .swath-text {
+    display: inline-block;
+    font-size: 12px;
+    // margin-top: -4px;
+    &.left {
+      padding-right: 10px;
+    }
+    &.right {
+      padding-left: 10px;
+    }
   }
+  .red-swath0 {background: @red}
+  .red-swath1 {background: lighten(@red,10%)}
+  .red-swath2 {background: lighten(@red,20%)}
+  .red-swath3 {background: lighten(@red,30%)}
+  .red-swath4 {background: lighten(@red,40%)}
+  .blue-swath0 {background: @blue}
+  .blue-swath1 {background: lighten(@blue,10%)}
+  .blue-swath2 {background: lighten(@blue,20%)}
+  .blue-swath3 {background: lighten(@blue,30%)}
+  .blue-swath4 {background: lighten(@blue,40%)}
+  .white-swath {background: lighten(@light-gray,15%);}
 }
 
 #county-map {
@@ -104,19 +120,19 @@
   display: inline-block;
   font-size: 14px;
   cursor: pointer;
-  color: @dark-gray;
+  color: lighten(@dark-gray,10%);
   background: @light-gray;
   padding: 5px 10px 4px 10px;
 
   &:hover {
-    background: @dark-gray;
+    background: lighten(@dark-gray,10%);
     color: white;
   }
 
   &.selected {
     color: @black;
     cursor: default;
-    background: @dark-gray;
+    background: lighten(@dark-gray,10%);
   }
 }
 
