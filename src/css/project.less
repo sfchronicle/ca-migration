@@ -1,6 +1,22 @@
 @red: #BC1826;//#8A0000;//"#F04646";
 @blue: #265B9B;//#194E8E;//#004366;//"#62A9CC";
 
+.desktop-instructions, .mobile-instructions {
+  font-size: 14px;
+  padding-top: 10px;
+}
+.desktop-instructions {
+  @media @mobile {
+    display: none;
+  }
+}
+.mobile-instructions {
+  display: none;
+  @media @mobile {
+    display: block;
+  }
+}
+
 .svg-container {
     display: inline-block;
     position: relative;
